@@ -6,11 +6,17 @@
 The objective of this activity was to create an employee database that allows you to add employees, roles and departments. To run the application first install the applications (npm i). Then run the application using node index and it begins. When prompted the user will be asked a series of questions pretaining to what the user is trying to do. Below are some screenshots of what I am talking about.
 
 Initial Prompt:
+
 ![image](mainprompt.png)
+
 Adding Employee:
+
 ![image](example.png)
+
 Viewing Table:
+
 ![image](allemployees.png)
+
 ## Table of Contents 
 
 * [Installation](#installation)
