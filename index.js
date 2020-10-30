@@ -4,7 +4,7 @@ const logo = require("asciiart-logo");
 const db = require("./db/");
 const inquirer = require("inquirer");
 const { end } = require("./db/connection");
-// const connection = require("./db/connection");
+const connection = require("./db/connection");
 require("console.table");
 
 init();
@@ -31,10 +31,10 @@ async function loadMainPrompts() {
           name: "Add Employee",
           value: "ADD_EMPLOYEE"
         },
-        {
-          name: "Update Employee",
-          value: "UPDATE_EMPLOYEE"
-        },
+        // {
+        //   name: "Update Employee",
+        //   value: "UPDATE_EMPLOYEE"
+        // },
         {
           name: "View All Roles",
           value: "VIEW_ROLES"
@@ -72,6 +72,8 @@ async function loadMainPrompts() {
         return viewDepartments();
       case "ADD_DEPARTMENT":
         return addDepartment();
+      // case "UPDATE_EMPLOYEE":
+      //   return updateEmployee();
       default:
         return quit();
     }
@@ -243,51 +245,48 @@ function addRole() {
         title: answer.title,
         salary: answer.salary,
         department_id: answer.id
+      },
+      function(err) {
+        if (err) throw err;
+        console.log("Role added");
+        // ***left off here trying to print now employee table***
+        console.table(answer);
+
+        
       }
     )
     loadMainPrompts();
   })
 }
 
-// function updateEmployeesRole() {
+
+// function updateEmployee() {
 //   inquirer.prompt([
 //     {
-//       name: "title",
-//       type: "",
-//       Message: "Which employee's role would you like to update?"
+//       name: "employee",
+//       type: "list",
+//       message: "Which employee would you like to update?"
+
 //     },
-//     {
-
-//     }
 //   ])
-// }
-function updateEmployee() {
-  inquirer.prompt([
-    {
-      name: "employee",
-      type: "list",
-      message: "Which employee would you like to update?"
+//   .then(function(answer) {
+//     connection.query(
+//     "UPDATE employee WHERE ??= ??",
+//     {
+//       role_id: answer.role || 0,
+//       manager_id: answer.manager || 0
+//     },
+//     function(err) {
+//       if (err) throw err;
+//       console.log("Employee updated");
+//       // ***left off here trying to print now employee table***
+//       console.table(answer);
+//     }
+//   )
+//   loadMainPrompts();
+//   })
 
-    },
-  ])
-  .then(function(answer) {
-    connection.query(
-    "UPDATE employee WHERE ??= ??",
-    {
-      role_id: answer.role || 0,
-      manager_id: answer.manager || 0
-    },
-    function(err) {
-      if (err) throw err;
-      console.log("Employee updated");
-      // ***left off here trying to print now employee table***
-      console.table(answer);
-    }
-  )
-  loadMainPrompts();
-  })
 
-}
 
 function quit() {
   console.table("Thank you")

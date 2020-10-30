@@ -44,6 +44,12 @@ class DB {
             departmentId
         );
     }
+    updateEmployee(employeeId) {
+        return this.connection.query(
+            "UPDATE employee WHERE ??=??",
+            employeeId
+        );
+    }
 
 }
 
