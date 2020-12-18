@@ -31,10 +31,10 @@ async function loadMainPrompts() {
           name: "Add Employee",
           value: "ADD_EMPLOYEE"
         },
-        // {
-        //   name: "Update Employee",
-        //   value: "UPDATE_EMPLOYEE"
-        // },
+        {
+          name: "Update Employee",
+          value: "UPDATE_EMPLOYEE"
+        },
         {
           name: "View All Roles",
           value: "VIEW_ROLES"
@@ -72,8 +72,8 @@ async function loadMainPrompts() {
         return viewDepartments();
       case "ADD_DEPARTMENT":
         return addDepartment();
-      // case "UPDATE_EMPLOYEE":
-      //   return updateEmployee();
+      case "UPDATE_EMPLOYEE":
+        return updateEmployee();
       default:
         return quit();
     }
@@ -260,32 +260,50 @@ function addRole() {
 }
 
 
-// function updateEmployee() {
-//   inquirer.prompt([
-//     {
-//       name: "employee",
-//       type: "list",
-//       message: "Which employee would you like to update?"
+function updateEmployee() {
+  inquirer.prompt(
+    [
+    {
+      name: "employee",
+      type: "input",
+      message: "Which employee would you like to update?"
 
-//     },
-//   ])
-//   .then(function(answer) {
-//     connection.query(
-//     "UPDATE employee WHERE ??= ??",
-//     {
-//       role_id: answer.role || 0,
-//       manager_id: answer.manager || 0
-//     },
-//     function(err) {
-//       if (err) throw err;
-//       console.log("Employee updated");
-//       // ***left off here trying to print now employee table***
-//       console.table(answer);
-//     }
-//   )
-//   loadMainPrompts();
-//   })
-
+    },
+    {
+      name: "role",
+      type: "input",
+      message: "What is the new role of the employee?",
+      validate: function(value) {
+        if (isNaN(value) === false) {
+          return true;
+        }
+        return false;
+      }
+    },
+    ],
+    
+  )
+  .then(function(answer) {
+    connection.query(
+    "UPDATE employee SET ? WHERE ?",
+    [
+      {
+        role_id: answer.role || 0,
+      },
+      {
+        id: answer.employee || 0
+      },
+    ],
+    function(err) {
+      if (err) throw err;
+      console.log("Employee updated");
+      // ***left off here trying to print now employee table***
+      console.table(answer);
+    }
+  )
+  loadMainPrompts();
+  })
+}
 
 
 function quit() {
@@ -381,4 +399,4 @@ function quit() {
 //         });
 //       // console.log(query.sql);
 //     });
-// }
+

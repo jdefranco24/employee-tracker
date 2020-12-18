@@ -46,7 +46,7 @@ class DB {
     }
     updateEmployee(employeeId) {
         return this.connection.query(
-            "UPDATE employee WHERE ??=??",
+            "UPDATE employee SET ? WHERE ?",
             employeeId
         );
     }
